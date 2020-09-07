@@ -3,12 +3,12 @@ const webpack = require('webpack')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
-const createThemeColorReplacerPlugin = require('./config/plugin.config')
+const createThemeColorReplacerPlugin = require('./config/plugin.config') // 色调和ant组件库样式
 
+// 文件地址
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
-
 // check Git
 function getGitHash () {
   try {
@@ -16,11 +16,10 @@ function getGitHash () {
   } catch (e) {}
   return 'unknown'
 }
-
+// 是否为生产环境
 const isProd = process.env.NODE_ENV === 'production'
-
+// CDN
 const assetsCDN = {
-  // webpack build externals
   externals: {
     vue: 'Vue',
     'vue-router': 'VueRouter',
@@ -28,7 +27,6 @@ const assetsCDN = {
     axios: 'axios'
   },
   css: [],
-  // https://unpkg.com/browse/vue@2.6.10/
   js: [
     '//cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js',
     '//cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.min.js',
@@ -36,7 +34,6 @@ const assetsCDN = {
     '//cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js'
   ]
 }
-
 // vue.config.js
 const vueConfig = {
   configureWebpack: {
@@ -88,8 +85,6 @@ const vueConfig = {
     loaderOptions: {
       less: {
         modifyVars: {
-          // less vars，customize ant design theme
-
           // 'primary-color': '#F5222D',
           // 'link-color': '#F5222D',
           'border-radius-base': '2px'
@@ -101,9 +96,7 @@ const vueConfig = {
   },
 
   devServer: {
-    // development server port 8000
     port: 8000
-    // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     // proxy: {
     //   '/api': {
     //     target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro',
@@ -113,14 +106,11 @@ const vueConfig = {
     // }
   },
 
-  // disable source map in production
   productionSourceMap: false,
   lintOnSave: false,
-  // babel-loader no-ignore node_modules/*
   transpileDependencies: []
 }
 
-// preview.pro.loacg.com only do not use in your production;
 if (process.env.VUE_APP_PREVIEW === 'true') {
   console.log('VUE_APP_PREVIEW', true)
   // add `ThemeColorReplacer` plugin to webpack plugins
