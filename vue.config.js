@@ -3,7 +3,6 @@ const webpack = require('webpack')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
-const createThemeColorReplacerPlugin = require('./config/plugin.config') // 色调和ant组件库样式
 
 // 文件地址
 function resolve (dir) {
@@ -85,8 +84,7 @@ const vueConfig = {
     loaderOptions: {
       less: {
         modifyVars: {
-          // 'primary-color': '#F5222D',
-          // 'link-color': '#F5222D',
+          'primary-color': '#2F54EB',
           'border-radius-base': '2px'
         },
         // DO NOT REMOVE THIS LINE
@@ -97,24 +95,11 @@ const vueConfig = {
 
   devServer: {
     port: 8000
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro',
-    //     ws: false,
-    //     changeOrigin: true
-    //   }
-    // }
   },
 
   productionSourceMap: false,
   lintOnSave: false,
   transpileDependencies: []
-}
-
-if (process.env.VUE_APP_PREVIEW === 'true') {
-  console.log('VUE_APP_PREVIEW', true)
-  // add `ThemeColorReplacer` plugin to webpack plugins
-  vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 }
 
 module.exports = vueConfig

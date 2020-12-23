@@ -2,12 +2,9 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import storage from 'store'
 import moment from 'moment'
-
-// default lang
-import enUS from './lang/en-US'
-
 Vue.use(VueI18n)
 
+import enUS from './lang/en-US'
 export const defaultLang = 'en-US'
 
 const messages = {
@@ -27,7 +24,6 @@ const loadedLanguages = [defaultLang]
 
 function setI18nLanguage (lang) {
   i18n.locale = lang
-  // request.headers['Accept-Language'] = lang
   document.querySelector('html').setAttribute('lang', lang)
   return lang
 }
